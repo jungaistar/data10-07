@@ -28,6 +28,14 @@ window.AUTH_CONFIG = {
       {
         "name": "Excel · 메일 · 회신",
         "desc": "두 시트 Excel 과 아웃룩 메일 초안(.eml)으로 보내고, 협력사 회신 Excel 의 바뀐 칸만 반영합니다."
+      },
+      {
+        "name": "추진현황",
+        "desc": "모든 협력사의 개선과제를 진행상태별로 거르고 협력사별 표와 간트로 봅니다."
+      },
+      {
+        "name": "Copilot 로 다듬기",
+        "desc": "협력사 · 품번을 별칭으로 가린 프롬프트를 복사해 Copilot 등에 붙여 넣고 답을 받아 반영합니다."
       }
     ],
     "steps": [
@@ -37,6 +45,53 @@ window.AUTH_CONFIG = {
       "개선 항목",
       "MASTER PLAN",
       "Excel · 메일"
-    ]
+    ],
+    "flow": [
+      {
+        "step": "로그인 · 승인",
+        "desc": "메일로 가입 → 사용 신청 → 관리자 승인(사내 PC 의 HTML 한 파일은 로그인 없음)"
+      },
+      {
+        "step": "불량 넣기",
+        "desc": "화면 등록 · 엑셀 붙여넣기 · 울산 · 인천캠퍼스 RAW 올리기"
+      },
+      {
+        "step": "유형 분류",
+        "desc": "직접 고른 유형 → 붙여 넣은 유형 칸 → 내용 키워드 순으로 10종"
+      },
+      {
+        "step": "개선 항목",
+        "desc": "협력사별 WORST 1·2·3 · 동일품번 2건 이상"
+      },
+      {
+        "step": "MASTER PLAN",
+        "desc": "기본 대책 초안 → Copilot 로 다듬기 → 간트로 계획 확정"
+      },
+      {
+        "step": "Excel · 메일",
+        "desc": "두 시트 Excel, 그 엑셀을 붙인 .eml 메일 초안"
+      }
+    ],
+    "goals": [
+      "공정불량을 불량유형 10종으로 자동 분류하고 협력사별 발생 현황을 보여 줍니다.",
+      "불량유형 WORST 1·2·3 과 동일품번 2건 이상을 우선 개선 항목으로 뽑아 MASTER PLAN 초안을 만듭니다.",
+      "간트로 계획 · 실적과 진행상태 4가지(진행중 · 완료 · 미완료 · 보류)를 색으로 관리합니다."
+    ],
+    "screen": "docs/img/screen.png",
+    "plan": "plan.html",
+    "home": true,
+    "landing": {
+      "company": {
+        "name": "HD현대",
+        "en": "HD HYUNDAI"
+      },
+      "colors": {
+        "navy": "#002554",
+        "navy2": "#001a3d",
+        "brand": "#003087",
+        "brandDark": "#002554",
+        "accent": "#5fe35f"
+      }
+    }
   }
 };

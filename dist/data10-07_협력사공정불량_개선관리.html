@@ -735,10 +735,211 @@ html.auth-lock body { overflow: hidden; }
 .ag-feats li:hover { border-color: rgba(255, 255, 255, .32); background: rgba(255, 255, 255, .08); }
 .ag-light .ag-feats li:hover { border-color: var(--ag-navy); background: #fff; }
 
+/* ───────── 대문 사진 ───────── */
+.ag-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* banner: 완성 그림을 위에 그대로(잘리지 않게), 아래에 기능 · 로그인 */
+.ag.ag-has-banner { background: var(--ag-bg); }
+.ag-banner { background: var(--ag-navy-2); display: flex; justify-content: center; }
+.ag-banner { cursor: pointer; }
+.ag-banner img { display: block; width: 100%; max-width: 1600px; height: auto; max-height: 72vh; object-fit: contain; }
+/* 데스크톱: 그림 아래로 로그인 카드가 첫 화면에 걸리게 높이를 줄인다 */
+@media (min-width: 960px) { .ag-banner img { max-height: 52vh; } }
+.ag-banner:focus-visible { outline: 3px solid var(--ag-brand); outline-offset: -3px; }
+.ag-wrap-banner { padding-top: 24px; padding-bottom: 8px; }
+.ag-has-banner .ag-hero-sub { background: none; color: var(--ag-ink); margin: 0; padding: 0 0 8px; }
+.ag-has-banner .ag-feats li { background: #fff; border-color: var(--ag-line); }
+.ag-has-banner .ag-feats b { color: var(--ag-ink); } .ag-has-banner .ag-feats span { color: var(--ag-sub); }
+.ag-has-banner .ag-flow-t { color: var(--ag-sub); }
+.ag-has-banner .ag-flow li { background: #fff; color: var(--ag-ink); border: 1px solid var(--ag-line); }
+.ag-has-banner .ag-flow li.is-on { box-shadow: inset 0 0 0 1.5px var(--ag-brand); color: var(--ag-brand-d); }
+.ag-has-banner .ag-n { background: var(--ag-navy); color: #fff; }
+@media (min-width: 960px) {
+  .ag-wrap-banner { min-height: 0; align-items: start; padding-top: 32px; }
+  .ag-has-banner .ag-hero-sub { padding: 8px 40px 24px 0; min-height: 0; }
+  .ag-has-banner .ag-side { padding: 8px 0 24px 40px; }
+  .ag-has-banner .ag-foot { color: var(--ag-sub); }
+}
+/* cover: 사진 위에 대표색을 덮는다(글자 대비를 위해 왼쪽을 더 짙게) */
+.ag-hero.ag-cover { background:
+  linear-gradient(100deg, color-mix(in srgb, var(--ag-navy-2) 94%, transparent) 0%, color-mix(in srgb, var(--ag-navy) 82%, transparent) 55%, color-mix(in srgb, var(--ag-navy) 45%, transparent) 100%),
+  var(--ag-photo) center / cover no-repeat, var(--ag-navy-2); }
+@media (min-width: 960px) {
+  .ag.ag-has-cover { background: linear-gradient(90deg, var(--ag-navy-2) 0, var(--ag-navy-2) 50%, var(--ag-bg) 50%); }
+  .ag-has-cover .ag-wrap { max-width: none; padding-left: 0; }
+  .ag-has-cover .ag-hero.ag-cover { margin: 0; padding: 56px 48px 56px max(var(--ag-pad), calc((100vw - 1180px) / 2)); min-height: 100vh; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ag *, .ag-modal * { transition: none !important; animation: none !important; }
   .ag-ring { opacity: .6; }
 }
+
+/* ═════════ 홈페이지 모드(로그인 전) — hp-* ═════════
+   색은 과제마다 --ag-navy · --ag-navy-2 · --ag-brand · --ag-brand-d · --ag-accent 로 바뀐다(plan.json landing.colors). */
+.ag.ag-home { background: #fff; color: var(--ag-ink); scroll-behavior: smooth; }
+@media (min-width: 960px) { .ag.ag-home { background: #fff; } }
+.ag-home.hp-modal-open { overflow: hidden; }
+.hp { --hp-pad: var(--ag-pad); --hp-max: 1200px; --hp-soft: #f4f7fb; --hp-line: #e2e8f0; font-size: 16px; }
+.hp-in { max-width: calc(var(--hp-max) + 2 * var(--hp-pad)); margin: 0 auto; padding: 0 var(--hp-pad); }
+.hp a { color: inherit; }
+.hp h1, .hp h2, .hp h3 { margin: 0; letter-spacing: -0.01em; }
+.hp-ic { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.hp-ic-s { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* 머리글 */
+.hp-nav { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .92); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+.hp-nav.is-scrolled { border-bottom-color: var(--hp-line); box-shadow: 0 6px 20px rgba(15, 30, 55, .06); }
+.hp-nav-in { display: flex; align-items: center; gap: 18px; min-height: 66px; }
+.hp-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; flex: 1 1 auto; }
+.hp-logo { height: 30px; width: auto; display: block; }
+.hp-wordmark { display: inline-flex; flex-direction: column; line-height: 1.05; font-weight: 800; font-size: 18px; color: var(--ag-navy); white-space: nowrap; }
+.hp-wordmark small { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; color: var(--ag-sub); margin-top: 3px; }
+.hp-div { width: 1px; height: 26px; background: var(--hp-line); flex: none; }
+.hp-tool { display: inline-flex; align-items: center; gap: 9px; min-width: 0; }
+.hp-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; flex: none;
+  background: linear-gradient(135deg, var(--ag-brand), var(--ag-navy)); color: #fff; box-shadow: 0 4px 12px color-mix(in srgb, var(--ag-brand) 35%, transparent); }
+.hp-mark-ic { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hp-tool-t { font-weight: 700; font-size: 15.5px; color: var(--ag-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hp-links { display: none; gap: 4px; }
+.hp-links a { text-decoration: none; color: var(--ag-sub); font-weight: 600; font-size: 14.5px; padding: 8px 12px; border-radius: 8px; }
+.hp-links a:hover { color: var(--ag-ink); background: var(--hp-soft); }
+.hp-acts { display: flex; gap: 8px; flex: none; }
+@media (min-width: 1024px) { .hp-links { display: flex; } }
+@media (max-width: 639px) { .hp-wordmark small, .hp-div, .hp-tool-t { display: none; } .hp-acts .hp-ghost { display: none; } }
+
+/* 단추 */
+.hp-btn { font: inherit; font-weight: 700; font-size: 14.5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 42px; padding: 9px 18px; border-radius: 10px; border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background-color .2s, border-color .2s, transform .15s, box-shadow .2s; }
+.hp-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--ag-brand) 45%, transparent); outline-offset: 2px; }
+.hp-lg { min-height: 50px; padding: 12px 24px; font-size: 16px; border-radius: 12px; }
+.hp-primary { background: var(--ag-brand); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--ag-brand) 30%, transparent); }
+.hp-primary:hover { background: var(--ag-brand-d); transform: translateY(-1px); }
+.hp-ghost { background: transparent; color: var(--ag-ink); border-color: var(--hp-line); }
+.hp-ghost:hover { border-color: var(--ag-brand); color: var(--ag-brand-d); }
+.hp-line { background: rgba(255, 255, 255, .08); color: #fff; border-color: rgba(255, 255, 255, .45); }
+.hp-line:hover { background: rgba(255, 255, 255, .16); }
+
+/* 히어로 */
+.hp-hero { position: relative; overflow: hidden; color: #fff;
+  background: radial-gradient(1200px 520px at 85% 15%, color-mix(in srgb, var(--ag-brand) 55%, transparent), transparent 60%),
+              linear-gradient(160deg, var(--ag-navy) 0%, var(--ag-navy-2) 100%); }
+.hp-hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .18;
+  background-image: radial-gradient(rgba(255, 255, 255, .55) 1px, transparent 1.2px); background-size: 26px 26px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%); mask-image: linear-gradient(180deg, #000 0%, transparent 85%); }
+.hp-cover { background: linear-gradient(100deg, color-mix(in srgb, var(--ag-navy-2) 95%, transparent) 0%, color-mix(in srgb, var(--ag-navy) 86%, transparent) 50%, color-mix(in srgb, var(--ag-navy) 55%, transparent) 100%), var(--hp-photo) center / cover no-repeat, var(--ag-navy-2); }
+.hp-hero-in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 56px; padding-bottom: 64px; align-items: center; }
+@media (min-width: 1024px) { .hp-hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 56px; padding-top: 84px; padding-bottom: 96px; min-height: min(78vh, 760px); } }
+.hp-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 16px; font-size: 14px; font-weight: 700; letter-spacing: .02em; color: var(--ag-accent); }
+.hp-eyebrow::before { content: ''; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+.hp-hero h1 { font-size: clamp(30px, 4.6vw, 54px); line-height: 1.18; font-weight: 800; color: #fff; }
+.hp-lead { margin: 18px 0 0; font-size: clamp(16px, 1.5vw, 18.5px); line-height: 1.7; color: rgba(255, 255, 255, .84); max-width: 640px; }
+.hp-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.hp-trust-chips { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.hp-trust-chips li { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; color: rgba(255, 255, 255, .78); }
+.hp-hero-vis { position: relative; }
+.hp-frame { margin: 0; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 30px 70px rgba(5, 12, 30, .45), 0 0 0 1px rgba(255, 255, 255, .12); }
+.hp-frame-bar { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; background: #eef2f7; border-bottom: 1px solid #dfe5ee; }
+.hp-frame-bar i { width: 10px; height: 10px; border-radius: 50%; background: #cfd7e2; }
+.hp-frame-bar i:nth-child(1) { background: #ff6159; } .hp-frame-bar i:nth-child(2) { background: #ffbd2e; } .hp-frame-bar i:nth-child(3) { background: #28c941; }
+.hp-frame-bar span { margin-left: 10px; font-size: 12px; color: #6b7a8c; background: #fff; border-radius: 6px; padding: 2px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hp-frame img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: cover; object-position: top left; }
+.hp-photo { margin: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(5, 12, 30, .45), 0 0 0 1px rgba(255, 255, 255, .12); aspect-ratio: 16 / 10; }
+.hp-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hp-art { color: color-mix(in srgb, var(--ag-accent) 70%, #fff); opacity: .9; }
+.hp-art .ag-art { position: static; width: 100%; opacity: 1; }
+.hp-float { position: absolute; display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-radius: 12px; background: #fff; color: var(--ag-ink);
+  font-weight: 700; font-size: 14px; box-shadow: 0 14px 34px rgba(5, 12, 30, .28); max-width: 260px; }
+.hp-float .hp-ic { color: var(--ag-brand); width: 22px; height: 22px; }
+.hp-float-1 { left: -18px; bottom: 28px; } .hp-float-2 { right: -14px; top: -16px; }
+@media (max-width: 1023px) { .hp-float { display: none; } }
+
+/* 배너(완성 그림) */
+.hp-banner { background: var(--ag-navy-2); }
+.hp-banner-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.hp-banner img { display: block; width: 100%; max-width: 1680px; margin: 0 auto; height: auto; max-height: 78vh; object-fit: contain; }
+.hp-intro { background: linear-gradient(160deg, var(--ag-navy) 0%, var(--ag-navy-2) 100%); color: #fff; }
+.hp-intro-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 40px; padding-top: 34px; padding-bottom: 38px; }
+.hp-intro .hp-cta-row { margin-top: 0; }
+.hp-h1s { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.3; font-weight: 800; color: #fff; }
+.hp-intro .hp-lead { margin-top: 8px; font-size: 16px; }
+
+/* 섹션 */
+.hp-sec { padding: 72px 0; }
+@media (min-width: 1024px) { .hp-sec { padding: 96px 0; } }
+.hp-alt { background: var(--hp-soft); }
+.hp-head { max-width: 720px; margin: 0 0 40px; }
+.hp-kicker { margin: 0 0 10px; font-size: 13.5px; font-weight: 800; letter-spacing: .12em; color: var(--ag-brand); }
+.hp-head h2 { font-size: clamp(25px, 3vw, 36px); line-height: 1.25; font-weight: 800; color: var(--ag-ink); }
+.hp-goals { padding: 0; margin-top: -40px; position: relative; z-index: 2; }
+.hp-goal-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+@media (min-width: 768px) { .hp-goal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.hp-goal { background: #fff; border: 1px solid var(--hp-line); border-radius: 16px; padding: 22px 22px 20px; box-shadow: 0 14px 36px rgba(15, 30, 55, .08); }
+.hp-goal-n { display: inline-block; font-weight: 800; font-size: 13px; color: var(--ag-brand); letter-spacing: .08em; margin-bottom: 8px; }
+.hp-goal p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ag-ink); }
+.hp-feat-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 640px) { .hp-feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .hp-feat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
+.hp-feat { border: 1px solid var(--hp-line); border-radius: 16px; padding: 26px 24px; background: #fff; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.hp-feat:hover { border-color: color-mix(in srgb, var(--ag-brand) 40%, var(--hp-line)); box-shadow: 0 16px 34px rgba(15, 30, 55, .08); transform: translateY(-2px); }
+.hp-feat-ic { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; margin-bottom: 16px;
+  background: color-mix(in srgb, var(--ag-brand) 11%, #fff); color: var(--ag-brand); }
+.hp-feat h3 { font-size: 18px; font-weight: 800; color: var(--ag-ink); margin-bottom: 8px; }
+.hp-feat p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--ag-sub); }
+.hp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; counter-reset: st; }
+@media (min-width: 768px) { .hp-steps { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); } }
+.hp-step { position: relative; background: #fff; border: 1px solid var(--hp-line); border-radius: 16px; padding: 22px 20px; transition: border-color .35s, box-shadow .35s; }
+.hp-step.is-on { border-color: var(--ag-brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ag-brand) 16%, transparent); }
+.hp-step-n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--ag-navy); color: #fff; font-weight: 800; margin-bottom: 14px; }
+.hp-step.is-on .hp-step-n { background: var(--ag-brand); }
+.hp-step h3 { font-size: 16.5px; font-weight: 800; color: var(--ag-ink); margin-bottom: 6px; }
+.hp-step p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ag-sub); }
+.hp-screen .hp-frame { box-shadow: 0 30px 70px rgba(15, 30, 55, .16), 0 0 0 1px var(--hp-line); }
+.hp-screen .hp-frame img { max-height: none; }
+.hp-cap { margin: 12px 0 0; text-align: center; font-size: 13.5px; color: var(--ag-sub); }
+.hp-trust { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 768px) { .hp-trust { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.hp-tr { background: #fff; border-radius: 16px; padding: 26px 24px; border: 1px solid var(--hp-line); }
+.hp-tr > .hp-ic { color: var(--ag-brand); width: 30px; height: 30px; margin-bottom: 14px; }
+.hp-tr h3 { font-size: 17.5px; font-weight: 800; color: var(--ag-ink); margin-bottom: 8px; }
+.hp-tr p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--ag-sub); }
+.hp-band { background: linear-gradient(120deg, var(--ag-navy) 0%, var(--ag-brand) 100%); color: #fff; }
+.hp-band-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 40px; padding-top: 56px; padding-bottom: 56px; }
+.hp-band h2 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 800; color: #fff; }
+.hp-band p { margin: 8px 0 0; color: rgba(255, 255, 255, .82); }
+.hp-band .hp-cta-row { margin-top: 0; }
+.hp-onband { background: #fff; color: var(--ag-navy); }
+.hp-onband:hover { transform: translateY(-1px); }
+.hp-line-band { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .6); }
+.hp-foot { background: var(--ag-navy-2); color: rgba(255, 255, 255, .72); font-size: 14px; }
+.hp-foot-in { padding-top: 34px; padding-bottom: 38px; display: grid; gap: 6px; }
+.hp-foot-brand { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; color: #fff; }
+.hp-foot-brand b { font-size: 16px; }
+.hp-foot p { margin: 0; } .hp-foot a { color: #fff; }
+.hp-foot-s { font-size: 13px; color: rgba(255, 255, 255, .55); }
+
+/* 로그인 창 */
+.hp-modal { position: fixed; inset: 0; z-index: 60; background: rgba(8, 16, 32, .55); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 18px; overflow-y: auto; }
+.hp-modal[hidden] { display: none; }
+.hp-dialog { position: relative; width: 100%; max-width: 440px; margin: auto; }
+.hp-dialog .ag-card { margin: 0; max-width: none; box-shadow: 0 30px 80px rgba(5, 12, 30, .35); }
+.hp-x { position: absolute; top: 10px; right: 12px; z-index: 2; border: 0; background: none; font-size: 26px; line-height: 1; color: var(--ag-sub); cursor: pointer; padding: 6px 8px; border-radius: 8px; }
+.hp-x:hover { background: var(--hp-soft, #f1f4f8); color: var(--ag-ink); }
+.hp-dialog .ag-tabs { margin-right: 34px; }
+
+/* 밝은 테마(light) — 히어로를 크림 · 남색으로 */
+.ag-light .hp-hero { background: radial-gradient(1000px 480px at 85% 10%, color-mix(in srgb, var(--ag-accent) 12%, transparent), transparent 60%), var(--ag-bg); color: var(--ag-ink); }
+.ag-light .hp-hero::after { opacity: .5; background-image: radial-gradient(color-mix(in srgb, var(--ag-navy) 18%, transparent) 1px, transparent 1.2px); }
+.ag-light .hp-hero h1 { color: var(--ag-navy); }
+.ag-light .hp-lead, .ag-light .hp-trust-chips li { color: var(--ag-sub); }
+.ag-light .hp-line { color: var(--ag-navy); border-color: color-mix(in srgb, var(--ag-navy) 35%, transparent); background: transparent; }
+.ag-light .hp-primary { background: var(--ag-navy); box-shadow: 0 6px 18px color-mix(in srgb, var(--ag-navy) 25%, transparent); }
+.ag-light .hp-primary:hover { background: var(--ag-navy-2); }
+.ag-light .hp-frame, .ag-light .hp-photo { box-shadow: 0 30px 70px rgba(40, 30, 20, .18), 0 0 0 1px var(--hp-line); }
+
+/* 떠오르기 — JS 가 hp-anim 을 붙였을 때만 숨긴다(효과가 꺼져도 내용은 보인다) */
+.hp-anim .hp-rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }
+.hp-anim .hp-rv.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .hp-anim .hp-rv { opacity: 1; transform: none; transition: none; } .ag-home { scroll-behavior: auto; } }
 
 </style>
   <!-- /auth-kit -->
@@ -1036,7 +1237,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   'use strict';
   /* 판(版) — index.html 의 ?v= · app.js 의 APP_VERSION 과 같아야 합니다(scripts/bump-version.mjs 로 함께 올림).
      브라우저가 옛 logic.js 와 새 app.js 를 섞어 쓰면 app.js 가 이 값을 보고 계산을 멈춥니다. */
-  var VERSION = '2026-11-10.1';
+  var VERSION = '2026-11-10.6';
 
   function str(v) { return v == null ? '' : String(v).trim(); }
   function uniq(a) { var s = {}, o = []; a.forEach(function (x) { if (!s[x]) { s[x] = 1; o.push(x); } }); return o; }
@@ -2654,7 +2855,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   var L = window.SQLogic;
   /* 판 맞추기 — 브라우저가 옛 logic.js 와 새 app.js 를 섞어 쓰면(Pages 캐시) 버튼과 결과가 어긋날 수 있어, 섞였으면 계산하지 않고 새로고침을 안내합니다.
      판은 scripts/bump-version.mjs 로 index.html(?v=) · logic.js 와 함께 올립니다. */
-  var APP_VERSION = '2026-11-10.1';
+  var APP_VERSION = '2026-11-10.6';
   if (!L || L.VERSION !== APP_VERSION) {
     var m0 = document.getElementById('main') || document.body;
     m0.innerHTML = '<section class="card" id="versionMismatch"><h1>새 판이 나왔습니다 — 새로고침(Ctrl+F5)해 주세요</h1><p class="alert warn">이 브라우저가 옛 파일과 새 파일을 섞어 불러왔습니다(js/logic.js ' +
@@ -4404,6 +4605,14 @@ window.AUTH_CONFIG = {
       {
         "name": "Excel · 메일 · 회신",
         "desc": "두 시트 Excel 과 아웃룩 메일 초안(.eml)으로 보내고, 협력사 회신 Excel 의 바뀐 칸만 반영합니다."
+      },
+      {
+        "name": "추진현황",
+        "desc": "모든 협력사의 개선과제를 진행상태별로 거르고 협력사별 표와 간트로 봅니다."
+      },
+      {
+        "name": "Copilot 로 다듬기",
+        "desc": "협력사 · 품번을 별칭으로 가린 프롬프트를 복사해 Copilot 등에 붙여 넣고 답을 받아 반영합니다."
       }
     ],
     "steps": [
@@ -4413,7 +4622,54 @@ window.AUTH_CONFIG = {
       "개선 항목",
       "MASTER PLAN",
       "Excel · 메일"
-    ]
+    ],
+    "flow": [
+      {
+        "step": "로그인 · 승인",
+        "desc": "메일로 가입 → 사용 신청 → 관리자 승인(사내 PC 의 HTML 한 파일은 로그인 없음)"
+      },
+      {
+        "step": "불량 넣기",
+        "desc": "화면 등록 · 엑셀 붙여넣기 · 울산 · 인천캠퍼스 RAW 올리기"
+      },
+      {
+        "step": "유형 분류",
+        "desc": "직접 고른 유형 → 붙여 넣은 유형 칸 → 내용 키워드 순으로 10종"
+      },
+      {
+        "step": "개선 항목",
+        "desc": "협력사별 WORST 1·2·3 · 동일품번 2건 이상"
+      },
+      {
+        "step": "MASTER PLAN",
+        "desc": "기본 대책 초안 → Copilot 로 다듬기 → 간트로 계획 확정"
+      },
+      {
+        "step": "Excel · 메일",
+        "desc": "두 시트 Excel, 그 엑셀을 붙인 .eml 메일 초안"
+      }
+    ],
+    "goals": [
+      "공정불량을 불량유형 10종으로 자동 분류하고 협력사별 발생 현황을 보여 줍니다.",
+      "불량유형 WORST 1·2·3 과 동일품번 2건 이상을 우선 개선 항목으로 뽑아 MASTER PLAN 초안을 만듭니다.",
+      "간트로 계획 · 실적과 진행상태 4가지(진행중 · 완료 · 미완료 · 보류)를 색으로 관리합니다."
+    ],
+    "screen": "docs/img/screen.png",
+    "plan": "plan.html",
+    "home": true,
+    "landing": {
+      "company": {
+        "name": "HD현대",
+        "en": "HD HYUNDAI"
+      },
+      "colors": {
+        "navy": "#002554",
+        "navy2": "#001a3d",
+        "brand": "#003087",
+        "brandDark": "#002554",
+        "accent": "#5fe35f"
+      }
+    }
   }
 };
 
@@ -4440,7 +4696,9 @@ window.AUTH_CONFIG = {
   if (isLocal && C.localBypass !== false && !force) { unlockPage(); return; }
 
   var gate = document.createElement('div');
-  gate.id = 'authGate'; gate.className = 'ag' + ((S.landing || {}).theme === 'light' ? ' ag-light' : '');
+  var LD = S.landing || {};
+  gate.id = 'authGate'; gate.className = 'ag' + (LD.theme === 'light' ? ' ag-light' : '') +
+    (LD.image && LD.imageMode === 'banner' ? ' ag-has-banner' : '') + (LD.image && LD.imageMode === 'cover' ? ' ag-has-cover' : '');
   // 과제별 색(plan.json landing.colors → auth-config) — 키는 ink · sub · bg · navy · navy2 · brand · brandDark · accent
   var COL = (S.landing || {}).colors || {}, VAR = { ink: '--ag-ink', sub: '--ag-sub', bg: '--ag-bg', navy: '--ag-navy', navy2: '--ag-navy-2', brand: '--ag-brand', brandDark: '--ag-brand-d', accent: '--ag-accent' };
   Object.keys(COL).forEach(function (k) { if (VAR[k] && /^#[0-9a-fA-F]{3,8}$/.test(COL[k])) root.style.setProperty(VAR[k], COL[k]); }); gate.setAttribute('role', 'dialog'); gate.setAttribute('aria-modal', 'true');
@@ -4470,7 +4728,20 @@ window.AUTH_CONFIG = {
     }).join('');
     var L = S.landing || {}, head = String(L.headline || S.title || document.title).split('\n').map(esc).join('<br>');
     var eyebrow = L.eyebrow || S.course, lead = L.lead || S.summary;
-    return '<div class="ag-wrap"><section class="ag-hero">' + art((S.steps || []).slice(0, 6).length) +
+    // 대문 사진(plan.json landing.image) — banner: 문구까지 든 완성 그림을 잘리지 않게 그대로, cover: 사진 위에 대표색을 덮고 문구를 얹는다
+    if (L.image && L.imageMode === 'banner') {
+      // 그림 속 「시작하기」 단추는 그림일 뿐이라, 그림 전체를 누르면 로그인 칸으로 내려간다
+      return '<a class="ag-banner" href="#agLoginBox" title="로그인으로"><img src="' + esc(L.image) + '" alt="' + esc(L.imageAlt || S.title || '') + '"></a>' +
+        '<div class="ag-wrap ag-wrap-banner"><section class="ag-hero ag-hero-sub"><h1 class="ag-sr">' + head + '</h1>' +
+        (feats ? '<ul class="ag-feats">' + feats + '</ul>' : '') +
+        (steps ? '<div class="ag-flow"><p class="ag-flow-t">이렇게 씁니다</p><ol>' + steps + '</ol></div>' : '') +
+        '</section><section class="ag-side" id="agLoginBox">' + right + '</section></div>' +
+        '<p class="ag-foot">가입 → 사용 신청 → 관리자 승인 뒤에 쓸 수 있습니다 · 업무 자료는 서버로 보내지 않고 이 브라우저에 저장합니다</p>';
+    }
+    var cover = L.image && L.imageMode === 'cover';
+    // cover 사진 주소는 페이지 기준 절대 주소로 넣는다(CSS 변수 안의 상대 주소는 스타일시트 위치 기준으로 풀린다)
+    return '<div class="ag-wrap"><section class="ag-hero' + (cover ? ' ag-cover' : '') + '"' +
+      (cover ? ' style="--ag-photo:url(&quot;' + esc(new URL(L.image, location.href).href) + '&quot;)"' : '') + '>' + (cover ? '' : art((S.steps || []).slice(0, 6).length)) +
       (eyebrow ? '<p class="ag-eyebrow">' + esc(eyebrow) + '</p>' : '') +
       '<h1>' + head + '</h1>' +
       (lead ? '<p class="ag-lead">' + esc(lead) + '</p>' : '') +
@@ -4480,7 +4751,15 @@ window.AUTH_CONFIG = {
       '<p class="ag-foot">가입 → 사용 신청 → 관리자 승인 뒤에 쓸 수 있습니다 · 업무 자료는 서버로 보내지 않고 이 브라우저에 저장합니다</p>';
   }
   function show(right) {
+    gate.classList.remove('ag-home');
     root.classList.add('auth-lock'); gate.hidden = false; gate.innerHTML = shell(right); gate.scrollTop = 0; fx();
+    var bn = gate.querySelector('.ag-banner');
+    if (bn) bn.onclick = function (e) {
+      e.preventDefault();
+      var box = gate.querySelector('#agLoginBox'), inp = box && box.querySelector('input');
+      if (box) box.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      if (inp) setTimeout(function () { inp.focus({ preventScroll: true }); }, reduce ? 0 : 450);
+    };
   }
 
   // ───────── 대문 그림(SVG) · 효과 ─────────
@@ -4553,10 +4832,154 @@ window.AUTH_CONFIG = {
     return m;
   }
 
+
+  // ───────── 홈페이지 모드(로그인 전) ─────────
+  // 회사 홈페이지처럼: 머리글(회사 로고 · 메뉴 · 로그인) → 히어로 → 목표 → 기능 → 사용 순서 → 실제 화면 → 믿을 수 있는 이유 → 권유 띠 → 꼬리말.
+  // 로그인 · 회원가입 카드는 창(모달)으로 연다. 내용은 plan.json(apply-auth-kit 이 auth-config 로 옮김)에서 온다.
+  function homeOn() { return !!S.home && LD.home !== false; }
+  var ICON = {
+    upload: 'M12 15V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v4a1 1 0 001 1h14a1 1 0 001-1v-4',
+    chart: 'M4 20h16M7 16v-5m5 5V7m5 9v-8',
+    doc: 'M7 3h7l5 5v12a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1zm7 0v5h5M9 13h7M9 17h5',
+    clock: 'M12 7v5l3.5 2M12 21a9 9 0 100-18 9 9 0 000 18z',
+    check: 'M9 12.5l2.2 2.2L15.5 10M12 21a9 9 0 100-18 9 9 0 000 18z',
+    camera: 'M4 8.5A1.5 1.5 0 015.5 7H8l1.5-2h5L16 7h2.5A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5zM12 16a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z',
+    bell: 'M6.5 16.5V11a5.5 5.5 0 0111 0v5.5l1.5 1.5H5zM10 20.5a2 2 0 004 0',
+    spark: 'M12 3.5l1.9 5 5 1.9-5 1.9-1.9 5-1.9-5-5-1.9 5-1.9zM18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z',
+    search: 'M10.5 17.5a7 7 0 100-14 7 7 0 000 14zM15.5 15.5L21 21',
+    shield: 'M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6zM9 12l2 2 4-4',
+    folder: 'M3.5 7.5A1.5 1.5 0 015 6h4.5l2 2H19a1.5 1.5 0 011.5 1.5v8A1.5 1.5 0 0119 19H5a1.5 1.5 0 01-1.5-1.5z',
+    move: 'M5 12h13m0 0l-4.5-4.5M18 12l-4.5 4.5M5 5v14',
+    users: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm-6 9a6 6 0 0112 0M16 4.5a3.5 3.5 0 010 6.8M18 14.5a6 6 0 013 5.5',
+    layers: 'M12 3.5l8.5 4.5-8.5 4.5L3.5 8zM3.5 12.5l8.5 4.5 8.5-4.5M3.5 16.5L12 21l8.5-4.5',
+    target: 'M12 21a9 9 0 100-18 9 9 0 000 18zm0-4.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9zm0-3.5a1 1 0 100-2 1 1 0 000 2z',
+    arrow: 'M5 12h14m0 0l-5-5m5 5l-5 5'
+  };
+  function icon(n, cls) { return '<svg class="' + (cls || 'hp-ic') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="' + (ICON[n] || ICON.layers) + '"/></svg>'; }
+  function iconFor(t) {
+    t = String(t || '');
+    if (/AI|초안|요약|프롬프트|추천|예측|머신러닝|라벨/.test(t)) return 'spark';
+    if (/엑셀|가져오기|등록|올리|업로드|넣기|수집/.test(t)) return 'upload';
+    if (/그래프|분석|BI|추이|대시보드|관리도|통계|달성률|파레토|병목/.test(t)) return 'chart';
+    if (/PDF|문서|보고서|기획서|양식|합의서|인보이스|내보내|기준서|체크시트|작업서/.test(t)) return 'doc';
+    if (/측정|시간|일정|타임|기한|만료|갱신|사이클/.test(t)) return 'clock';
+    if (/판정|검사|합불|확인|점검|불량|대조/.test(t)) return 'check';
+    if (/사진|도면|이미지|비전|스캔/.test(t)) return 'camera';
+    if (/알림|메일|경보|경고/.test(t)) return 'bell';
+    if (/검색|찾|진단|원인/.test(t)) return 'search';
+    if (/로그인|승인|권한|구성원/.test(t)) return 'shield';
+    if (/교육|신입|인원|담당/.test(t)) return 'users';
+    if (/재고|자재|발주|실사/.test(t)) return 'layers';
+    return 'target';
+  }
+  function absUrl(u) { try { return new URL(u, location.href).href; } catch (e) { return u; } }
+  function homeHtml() {
+    var L = LD, co = L.company || {}, title = S.title || document.title;
+    var head = String(L.headline || title).split('\n').map(esc).join('<br>');
+    var lead = L.lead || S.summary || '';
+    var eyebrow = L.eyebrow || (co.name ? co.name + (co.team ? ' · ' + co.team : '') : (S.course || ''));
+    var feats = (S.features || []).slice(0, 6), flow = (S.flow || []).slice(0, 6), goals = (S.goals || []).slice(0, 3);
+    var banner = L.image && L.imageMode === 'banner', cover = L.image && L.imageMode === 'cover';
+    var heroImg = L.hero || (cover ? L.image : '');
+    var brand = co.logo ? '<img class="hp-logo" src="' + esc(co.logo) + '" alt="' + esc(co.name || '') + '">' :
+      (co.name ? '<span class="hp-wordmark">' + esc(co.name) + (co.en ? '<small>' + esc(co.en) + '</small>' : '') + '</span>' : '');
+    var tool = '<span class="hp-tool"><span class="hp-mark">' + icon(iconFor(title + ' ' + (feats[0] || {}).name), 'hp-mark-ic') + '</span><span class="hp-tool-t">' + esc(title) + '</span></span>';
+    var nav = '<header class="hp-nav"><div class="hp-in hp-nav-in">' +
+      '<a class="hp-brand" href="#hp-top" aria-label="맨 위로">' + brand + (brand ? '<i class="hp-div" aria-hidden="true"></i>' : '') + tool + '</a>' +
+      '<nav class="hp-links" aria-label="홈페이지 메뉴">' + (feats.length ? '<a href="#hp-features">기능</a>' : '') + (flow.length ? '<a href="#hp-flow">사용 순서</a>' : '') +
+      (S.screen && ((heroImg && !cover) || banner) ? '<a href="#hp-screen">화면</a>' : '') + (S.plan ? '<a href="' + esc(S.plan) + '">기획서</a>' : '') + '</nav>' +
+      '<div class="hp-acts"><button type="button" class="hp-btn hp-ghost" data-login="login">로그인</button>' +
+      '<button type="button" class="hp-btn hp-primary" data-login="signup">시작하기</button></div></div></header>';
+    var cta = '<div class="hp-cta-row"><button type="button" class="hp-btn hp-primary hp-lg" data-login="login">로그인하고 시작하기 ' + icon('arrow', 'hp-ic-s') + '</button>' +
+      (S.plan ? '<a class="hp-btn hp-line hp-lg" href="' + esc(S.plan) + '">기획서 보기</a>' : '') + '</div>';
+    var trust = '<ul class="hp-trust-chips"><li>' + icon('shield', 'hp-ic-s') + '승인된 구성원만</li><li>' + icon('folder', 'hp-ic-s') + '자료는 내 브라우저에</li><li>' + icon('users', 'hp-ic-s') + '회사 · 개인 메일 가입</li></ul>';
+    var frame = function (src, cap) {
+      return '<figure class="hp-frame"><div class="hp-frame-bar"><i></i><i></i><i></i><span>' + esc((location.host || '').replace(/^www\./, '')) + '</span></div>' +
+        '<img src="' + esc(src) + '" alt="' + esc(cap) + '" loading="lazy"></figure>';
+    };
+    var chips = feats.slice(0, 2).map(function (f, i) {
+      return '<div class="hp-float hp-float-' + (i + 1) + '">' + icon(iconFor(f.name)) + '<span>' + esc(f.name) + '</span></div>';
+    }).join('');
+    var visual = heroImg && !cover ? '<figure class="hp-photo"><img src="' + esc(heroImg) + '" alt="' + esc(L.heroAlt || title) + '"></figure>' :
+      (S.screen ? frame(S.screen, title + ' 실제 화면') : '<div class="hp-art">' + art(flow.length) + '</div>');
+    var hero;
+    if (banner) {
+      hero = '<section class="hp-banner" id="hp-top"><button type="button" class="hp-banner-btn" data-login="login" aria-label="로그인">' +
+        '<img src="' + esc(L.image) + '" alt="' + esc(L.imageAlt || title) + '"></button></section>' +
+        '<section class="hp-intro"><div class="hp-in hp-intro-in"><div><p class="hp-eyebrow">' + esc(eyebrow) + '</p><h1 class="hp-h1s">' + head + '</h1>' +
+        (lead ? '<p class="hp-lead">' + esc(lead) + '</p>' : '') + '</div>' + cta + '</div></section>';
+    } else {
+      hero = '<section class="hp-hero' + (cover ? ' hp-cover' : '') + '" id="hp-top"' +
+        (cover ? ' style="--hp-photo:url(&quot;' + esc(absUrl(L.image)) + '&quot;)"' : '') + '><div class="hp-in hp-hero-in">' +
+        '<div class="hp-hero-copy hp-rv">' + (eyebrow ? '<p class="hp-eyebrow">' + esc(eyebrow) + '</p>' : '') + '<h1>' + head + '</h1>' +
+        (lead ? '<p class="hp-lead">' + esc(lead) + '</p>' : '') + cta + trust + '</div>' +
+        '<div class="hp-hero-vis hp-rv">' + visual + chips + '</div></div></section>';
+    }
+    var goalsH = goals.length ? '<section class="hp-sec hp-goals"><div class="hp-in"><div class="hp-goal-grid">' + goals.map(function (g, i) {
+      return '<div class="hp-goal hp-rv"><span class="hp-goal-n">0' + (i + 1) + '</span><p>' + esc(g) + '</p></div>';
+    }).join('') + '</div></div></section>' : '';
+    var featH = feats.length ? '<section class="hp-sec" id="hp-features"><div class="hp-in"><div class="hp-head hp-rv"><p class="hp-kicker">기능</p><h2>현장에서 바로 쓰는 기능</h2></div>' +
+      '<div class="hp-feat-grid">' + feats.map(function (f) {
+        return '<article class="hp-feat hp-rv"><span class="hp-feat-ic">' + icon(iconFor(f.name + ' ' + f.desc)) + '</span><h3>' + esc(f.name) + '</h3><p>' + esc(f.desc) + '</p></article>';
+      }).join('') + '</div></div></section>' : '';
+    var flowH = flow.length ? '<section class="hp-sec hp-alt" id="hp-flow"><div class="hp-in"><div class="hp-head hp-rv"><p class="hp-kicker">사용 순서</p><h2>이렇게 씁니다</h2></div>' +
+      '<ol class="hp-steps">' + flow.map(function (st, i) {
+        return '<li class="hp-step hp-rv"><span class="hp-step-n">' + (i + 1) + '</span><h3>' + esc(st.step) + '</h3>' + (st.desc ? '<p>' + esc(st.desc) + '</p>' : '') + '</li>';
+      }).join('') + '</ol></div></section>' : '';
+    var screenH = S.screen && ((heroImg && !cover) || banner) ? '<section class="hp-sec" id="hp-screen"><div class="hp-in"><div class="hp-head hp-rv"><p class="hp-kicker">실제 화면</p><h2>한 화면에서 확인합니다</h2></div>' +
+      '<div class="hp-screen hp-rv">' + frame(S.screen, title + ' 실제 화면') + '<p class="hp-cap">가상 예제 데이터로 찍은 화면입니다.</p></div></div></section>' : '';
+    var trustH = '<section class="hp-sec hp-alt"><div class="hp-in"><div class="hp-head hp-rv"><p class="hp-kicker">믿고 쓰는 이유</p><h2>우리 팀만, 안전하게</h2></div><div class="hp-trust">' +
+      '<div class="hp-tr hp-rv">' + icon('shield') + '<h3>승인제 접근</h3><p>회사 메일이나 개인 메일로 가입한 뒤 관리자가 승인한 구성원만 도구를 엽니다. 관리자는 팀원의 신청을 직접 승인합니다.</p></div>' +
+      '<div class="hp-tr hp-rv">' + icon('folder') + '<h3>자료는 내 브라우저에</h3><p>업무 파일과 입력한 값은 서버로 보내지 않고 쓰는 사람의 브라우저에 저장합니다. 필요하면 백업 파일로 옮깁니다.</p></div>' +
+      '<div class="hp-tr hp-rv">' + icon('move') + '<h3>우리 회사로 옮기기</h3><p>로그인 서버와 저장소를 회사 계정으로 옮겨 그대로 쓸 수 있습니다. SQL 한 번과 설정 파일 한 곳이면 됩니다.</p></div>' +
+      '</div></div></section>';
+    var band = '<section class="hp-band"><div class="hp-in hp-band-in hp-rv"><div><h2>오늘 업무부터 바로 써 보세요</h2><p>가입 → 사용 신청 → 관리자 승인 뒤 바로 열립니다.</p></div>' +
+      '<div class="hp-cta-row"><button type="button" class="hp-btn hp-onband hp-lg" data-login="signup">회원가입</button><button type="button" class="hp-btn hp-line-band hp-lg" data-login="login">로그인</button></div></div></section>';
+    var foot = '<footer class="hp-foot"><div class="hp-in hp-foot-in"><div class="hp-foot-brand">' + (co.name ? '<b>' + esc(co.name) + '</b>' : '') + '<span>' + esc(title) + '</span></div>' +
+      '<p>' + esc(S.course || '') + (S.plan ? ' · <a href="' + esc(S.plan) + '">최종 기획서</a>' : '') + '</p>' +
+      '<p class="hp-foot-s">© ' + new Date().getFullYear() + ' ' + esc(co.name || title) + ' · 업무 자료는 서버로 보내지 않고 이 브라우저에 저장합니다</p></div></footer>';
+    var modal = '<div class="hp-modal" id="agModal" hidden><div class="hp-dialog" role="dialog" aria-modal="true" aria-label="로그인">' +
+      '<button type="button" class="hp-x" data-close aria-label="닫기">×</button><div id="agModalBody"></div></div></div>';
+    return '<div class="hp">' + nav + hero + goalsH + featH + flowH + screenH + trustH + band + foot + '</div>' + modal;
+  }
+  function openModal() {
+    var m = gate.querySelector('#agModal'); if (!m) return;
+    m.hidden = false; gate.classList.add('hp-modal-open');
+    var i = m.querySelector('input'); if (i) setTimeout(function () { i.focus(); }, 30);
+  }
+  function closeModal() { var m = gate.querySelector('#agModal'); if (m) m.hidden = true; gate.classList.remove('hp-modal-open'); }
+  function bindHome() {
+    gate.querySelectorAll('[data-login]').forEach(function (b) {
+      b.onclick = function () { viewLogin(b.getAttribute('data-login'), null, true); };
+    });
+    var m = gate.querySelector('#agModal');
+    m.addEventListener('click', function (e) { if (e.target === m || e.target.hasAttribute('data-close')) closeModal(); });
+    gate.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) closeModal(); });
+    gate.querySelectorAll('.hp-nav a[href^="#"]').forEach(function (a) {
+      a.onclick = function (e) { var t = gate.querySelector(a.getAttribute('href')); if (!t) return; e.preventDefault(); t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); };
+    });
+    var nav = gate.querySelector('.hp-nav');
+    gate.addEventListener('scroll', function () { nav.classList.toggle('is-scrolled', gate.scrollTop > 8); }, { passive: true });
+    // 화면에 들어올 때 살짝 떠오른다 — 모션 최소화 · IntersectionObserver 없으면 처음부터 보인다
+    var els = gate.querySelectorAll('.hp-rv');
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-in'); }); }
+    else {
+      gate.classList.add('hp-anim');
+      var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }); }, { root: gate, threshold: 0.12 });
+      els.forEach(function (el) { io.observe(el); });
+    }
+    // 사용 순서 — 차례로 밝아진다
+    var steps = gate.querySelectorAll('.hp-step'), k = 0;
+    if (steps.length && !reduce) fxTimer = setInterval(function () {
+      if (gate.hidden) return stopFx();
+      steps.forEach(function (s, j) { s.classList.toggle('is-on', j === k); }); k = (k + 1) % steps.length;
+    }, 2200);
+  }
+
   // ───────── 로그인 · 회원가입 ─────────
-  function viewLogin(tab, note) {
+  function viewLogin(tab, note, open) {
     var signup = tab === 'signup';
-    show('<div class="ag-card">' +
+    var card = ('<div class="ag-card">' +
       '<div class="ag-tabs" role="tablist"><button type="button" role="tab" data-tab="login" aria-selected="' + !signup + '">로그인</button>' +
       '<button type="button" role="tab" data-tab="signup" aria-selected="' + signup + '">회원가입</button></div>' +
       (signup ?
@@ -4576,8 +4999,16 @@ window.AUTH_CONFIG = {
         (C.kakao ? '<div class="ag-or"><span>또는</span></div><button type="button" class="ag-btn ag-kakao" id="agKakao">카카오로 로그인</button>' : '') +
         '<p class="ag-hint">처음이면 「회원가입」에서 가입하세요. 비밀번호를 잊었으면 관리자에게 알려 주세요.</p>') +
       '<p class="ag-msg" role="status" aria-live="polite"></p></div>');
+    if (homeOn()) {
+      if (!gate.querySelector('.hp')) {
+        stopFx(); root.classList.add('auth-lock'); gate.hidden = false;
+        gate.classList.add('ag-home'); gate.innerHTML = homeHtml(); gate.scrollTop = 0; bindHome();
+      }
+      gate.querySelector('#agModalBody').innerHTML = card;
+      if (open || note) openModal();
+    } else show(card);
     if (note) msg(note.text, note.kind);
-    gate.querySelectorAll('[data-tab]').forEach(function (b) { b.onclick = function () { viewLogin(b.getAttribute('data-tab')); }; });
+    gate.querySelectorAll('[data-tab]').forEach(function (b) { b.onclick = function () { viewLogin(b.getAttribute('data-tab'), null, true); }; });
     var f = $('#agLogin');
     if (f) f.onsubmit = function (ev) {
       ev.preventDefault();

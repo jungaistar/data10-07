@@ -5,7 +5,7 @@
   var L = window.SQLogic;
   /* 판 맞추기 — 브라우저가 옛 logic.js 와 새 app.js 를 섞어 쓰면(Pages 캐시) 버튼과 결과가 어긋날 수 있어, 섞였으면 계산하지 않고 새로고침을 안내합니다.
      판은 scripts/bump-version.mjs 로 index.html(?v=) · logic.js 와 함께 올립니다. */
-  var APP_VERSION = '2026-10-28.1';
+  var APP_VERSION = '2026-11-10.1';
   if (!L || L.VERSION !== APP_VERSION) {
     var m0 = document.getElementById('main') || document.body;
     m0.innerHTML = '<section class="card" id="versionMismatch"><h1>새 판이 나왔습니다 — 새로고침(Ctrl+F5)해 주세요</h1><p class="alert warn">이 브라우저가 옛 파일과 새 파일을 섞어 불러왔습니다(js/logic.js ' +
@@ -25,7 +25,6 @@
   var PAGE = 50;
   var SINGLE = !!window.__SINGLE_FILE__;   // scripts/build-single.mjs 가 만든 「HTML 한 파일」 판이면 true
   var SINGLE_NAME = 'data10-07_협력사공정불량_개선관리.html';
-  var PAGES_URL = 'https://data10-07.jobability.co.kr/';
 
   var db = S.loadDb();
   var ui = {
@@ -1703,7 +1702,7 @@
       h('li', null, '입력한 데이터는 그 PC 의 그 브라우저 안에만 저장됩니다. 다른 브라우저로 열면 빈 화면에서 시작합니다. PC 를 바꿀 때는 「백업 · 복원」의 JSON 을 받아 새 PC 에서 되살립니다.'),
       h('li', null, '새 판으로 바꿀 때: 새 파일을 받아 옛 파일 자리에 덮어쓰고(같은 이름 · 같은 폴더) 다시 엽니다. 같은 브라우저로 열면 쌓아 둔 데이터가 그대로 이어집니다. 바꾸기 전에 JSON 백업을 한 번 받아 두세요.'));
     return h('section', { class: 'card', id: 'singleCard' }, h('h2', null, 'HTML 파일 한 개로 쓰기 (사내 PC)'),
-      SINGLE ? h('p', { class: 'alert info' }, '지금 열린 것이 HTML 한 파일 판입니다(판 ' + APP_VERSION + '). 새 판은 인터넷이 되는 PC 에서 ' + PAGES_URL + ' 의 「HTML 파일로 받기」로 받습니다.')
+      SINGLE ? h('p', { class: 'alert info' }, '지금 열린 것이 HTML 한 파일 판입니다(판 ' + APP_VERSION + '). 새 판은 인터넷이 되는 PC 에서 이 도구 사이트(처음 이 파일을 받은 주소)를 열어 「설정 → HTML 파일로 받기」로 받습니다.')
         : h('div', { class: 'btn-row' }, h('a', { class: 'btn btn-primary', id: 'singleDownload', href: 'dist/' + SINGLE_NAME, download: SINGLE_NAME }, icon('down'), 'HTML 파일로 받기 (판 ' + APP_VERSION + ')')),
       steps);
   }

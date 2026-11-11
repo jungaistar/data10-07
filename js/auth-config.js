@@ -8,6 +8,7 @@ window.AUTH_CONFIG = {
   "kakao": true,
   "idleMinutes": 30,
   "localBypass": true,
+  "board": true,
   "site": {
     "title": "협력사 공정불량 Master Plan",
     "summary": "협력사 공정불량을 등록하거나 캠퍼스별 RAW DATA 를 올려 불량유형 10종으로 나누고, WORST 1·2·3 · 동일품번 반복을 우선 개선 항목으로 개선 MASTER PLAN 초안과 간트를 만들어 협력사와 Excel · 메일로 진행사항을 주고받는 도구입니다.",

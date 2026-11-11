@@ -188,8 +188,10 @@ window.AUTH_CONFIG = {
     },
     "landing": {
       "company": {
-        "name": "HD현대",
-        "en": "HD HYUNDAI"
+        "name": "HD건설기계",
+        "en": "HD CONSTRUCTION EQUIPMENT",
+        "logo": "images/logo.png",
+        "logoH": 24
       },
       "colors": {
         "navy": "#002554",

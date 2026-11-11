@@ -1103,6 +1103,17 @@ html.auth-lock body { overflow: hidden; }
 .ks-thumbs img { width: 100%; aspect-ratio: 16 / 7.5; object-fit: cover; border-radius: 10px; border: 1px solid #e2e8f0; display: block; }
 .kp code { padding: 1px 6px; border-radius: 6px; background: #eef2f6; font-size: .92em; }
 
+/* 밝은 사진(slides[].tone = light): 왼쪽을 흰 면으로 받치고 글자를 어둡게 */
+.hp-slide::before, .hp-slide h1, .hp-slide .hp-lead, .hp-slide .hp-trust-chips li, .hp-slide .hp-eyebrow { transition: color .5s, background .5s, opacity .5s; }
+.hp-slide.hp-sl-light::before { background: linear-gradient(95deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .72) 40%, rgba(255, 255, 255, .12) 72%, transparent 100%); }
+.hp-slide.hp-sl-light h1 { color: var(--ag-navy); text-shadow: 0 1px 12px rgba(255, 255, 255, .7); }
+.hp-slide.hp-sl-light .hp-lead, .hp-slide.hp-sl-light .hp-trust-chips li { color: var(--ag-ink); }
+.hp-slide.hp-sl-light .hp-eyebrow { color: var(--ag-brand-d); }
+.hp-slide.hp-sl-light .hp-line { color: var(--ag-navy); border-color: color-mix(in srgb, var(--ag-navy) 45%, transparent); background: rgba(255, 255, 255, .55); }
+.hp-slide.hp-sl-light .hp-sl-cap { color: var(--ag-ink); }
+.hp-slide.hp-sl-light .hp-sl-dots button::before { background: color-mix(in srgb, var(--ag-navy) 35%, transparent); }
+.hp-slide.hp-sl-light .hp-sl-dots button[aria-current="true"]::before { background: var(--ag-navy); }
+
 </style>
   <style>/* css/board.css */
 /* data10 게시판 · 새 글 알림 — 정본: data10-00/kit/auth/css/board.css */
@@ -1440,7 +1451,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   'use strict';
   /* 판(版) — index.html 의 ?v= · app.js 의 APP_VERSION 과 같아야 합니다(scripts/bump-version.mjs 로 함께 올림).
      브라우저가 옛 logic.js 와 새 app.js 를 섞어 쓰면 app.js 가 이 값을 보고 계산을 멈춥니다. */
-  var VERSION = '2026-11-11.4';
+  var VERSION = '2026-11-11.5';
 
   function str(v) { return v == null ? '' : String(v).trim(); }
   function uniq(a) { var s = {}, o = []; a.forEach(function (x) { if (!s[x]) { s[x] = 1; o.push(x); } }); return o; }
@@ -3058,7 +3069,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   var L = window.SQLogic;
   /* 판 맞추기 — 브라우저가 옛 logic.js 와 새 app.js 를 섞어 쓰면(Pages 캐시) 버튼과 결과가 어긋날 수 있어, 섞였으면 계산하지 않고 새로고침을 안내합니다.
      판은 scripts/bump-version.mjs 로 index.html(?v=) · logic.js 와 함께 올립니다. */
-  var APP_VERSION = '2026-11-11.4';
+  var APP_VERSION = '2026-11-11.5';
   if (!L || L.VERSION !== APP_VERSION) {
     var m0 = document.getElementById('main') || document.body;
     m0.innerHTML = '<section class="card" id="versionMismatch"><h1>새 판이 나왔습니다 — 새로고침(Ctrl+F5)해 주세요</h1><p class="alert warn">이 브라우저가 옛 파일과 새 파일을 섞어 불러왔습니다(js/logic.js ' +
@@ -5448,6 +5459,7 @@ window.AUTH_CONFIG = {
       i = (k + n) % n; track.style.transform = 'translateX(' + (-100 * i) + '%)';
       box.querySelectorAll('.hp-sl-dots button').forEach(function (d, j) { if (j === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
       if (cap) cap.textContent = (sl[i] && sl[i].caption) || '';
+      box.classList.toggle('hp-sl-light', !!(sl[i] && sl[i].tone === 'light'));   // 밝은 사진이면 글자를 어둡게
     }
     go(0);
     box.querySelectorAll('[data-sl]').forEach(function (b) {

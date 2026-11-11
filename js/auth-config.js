@@ -200,7 +200,19 @@ window.AUTH_CONFIG = {
         "brand": "#003087",
         "brandDark": "#002554",
         "accent": "#5fe35f"
-      }
+      },
+      "slides": [
+        {
+          "image": "images/slide-1.jpg"
+        },
+        {
+          "image": "images/slide-2.jpg"
+        },
+        {
+          "image": "images/slide-3.jpg"
+        }
+      ],
+      "heroMode": "slide"
     }
   }
 };

@@ -15,6 +15,7 @@ function local(ref) { return path.join(ROOT, ref.replace(/\?.*$/, '')); }
 
 export function buildSingle() {
   let html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  html = html.replace(/\n?[ \t]*<!-- seo-kit[^>]*-->[\s\S]*?<!-- \/seo-kit -->/g, '');   // 공유 미리보기 메타 · 아이콘은 한 파일 판에 필요 없다(외부 주소)
   const used = [];
   html = html.replace(/<link rel="stylesheet" href="([^"]+)">/g, (m, href) => {
     if (/^(https?:)?\/\//.test(href)) throw new Error('외부 CSS: ' + href);
